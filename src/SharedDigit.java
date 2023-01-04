@@ -2,7 +2,8 @@ public class SharedDigit {
 
     public static void main(String[] args) {
 
-        System.out.println(hasSharedDigit(56, 35));
+//        System.out.println(hasSharedDigit(56, 35));
+        System.out.println(getGreatestCommonDivisor(25, 15));
 
     }
 
@@ -153,24 +154,21 @@ public class SharedDigit {
             return -1;
         }
 
+            int smallest = Math.min(first, second);
+            int divisor = 0;
+            for (int i = smallest; i >= 0; i--) {
+                if (first % i == 0 && second % i == 0) {
+                    divisor = i;
+                }
 
+            }
+
+      return divisor;
   }
-
-
 
 //
 //    HINT: Use a while or a for loop and check if both numbers can be divided without a remainder.
 //
 //    HINT: Find the minimum of the two numbers.
 //
-//
-
-
-
-
-
-
-
-
-
 }
