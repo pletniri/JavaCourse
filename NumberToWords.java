@@ -2,31 +2,100 @@ public class NumberToWords {
 
     public static void main(String[] args) {
 
+//        System.out.println(getDigitCount(209));
+//        numberToWords(209);
+//        System.out.println(reverse(456));
+        numberToWords(100);
+
     }
 //
 //    Number To Words
 //    Write a method called numberToWords with one int parameter named number.
-//
 //    The method should print out the passed number using words for the digits.
-//
 //    If the number is negative, print "Invalid Value".
-//
 //    To print the number as words, follow these steps:
-//
 //    Extract the last digit of the given number using the remainder operator.
-//
-//    Convert the value of the digit found in Step 1 into a word. There are 10 possible values for that digit, those being 0, 1, 2, 3, 4, 5, 6, 7, 8, 9. Print the corresponding word for each digit, e.g. print "Zero" if the digit is 0, "One" if the digit is 1, and so on.
-//
+//    Convert the value of the digit found in Step 1 into a word. There are 10 possible values for that digit,
+//    those being 0, 1, 2, 3, 4, 5, 6, 7, 8, 9. Print the corresponding word for each digit, e.g. print "Zero"
+//    if the digit is 0, "One" if the digit is 1, and so on.//
 //    Remove the last digit from the number.
-//
 //    Repeat Steps 2 through 4 until the number is 0.
-//
+
+    public static void numberToWords(int number){
+        if(number < 0) {
+            System.out.println("Invalid Value");
+        }
+        int reversed = reverse(number);
+        int count1 = getDigitCount(number);
+        int count2 = getDigitCount(reversed);
+        int difference = count1 - count2;
+
+        while(reversed > 0) {
+
+            int lastDigit = reversed % 10;
+            switch (lastDigit) {
+                case 0:
+                    System.out.println("Zero");
+                    break;
+
+                case 1:
+                    System.out.println("One");
+                    break;
+                case 2:
+                    System.out.println("Two");
+                    break;
+                case 3:
+                    System.out.println("Three");
+                    break;
+                case 4:
+                    System.out.println("Four");
+                    break;
+                case 5:
+                    System.out.println("Five");
+                    break;
+                case 6:
+                    System.out.println("Six");
+                    break;
+                case 7:
+                    System.out.println("Seven");
+                    break;
+                case 8:
+                    System.out.println("Eight");
+                    break;
+                case 9:
+                    System.out.println("Nine");
+                    break;
+            }
+            reversed = reversed / 10;
+        }
+        if(count1 > count2) {
+            for(int i = count2; i <= difference; i++){
+                System.out.println("Zero");
+            }
+        }
+    }
+
 //    The logic above is correct, but in its current state, the words will be printed in reverse order. For example,
 //    if the number is 234, the logic above will produce the output "Four Three Two" instead of "Two Three Four".
 //    To overcome this problem, write a second method called reverse.
 //
 //    The method reverse should have one int parameter and return the reversed number (int). For example,
 //    if the number passed is 234, then the reversed number would be 432. The method  reverse should also reverse negative numbers.
+
+    public static int reverse(int number) {
+        int reverseNumber = 0;
+        while(number > 0){
+            reverseNumber = reverseNumber * 10;
+            int lastDigit = number % 10;
+            reverseNumber += lastDigit;
+            number = number / 10;
+        }
+        return number = reverseNumber;
+
+    }
+
+
+
 //
 //    Use the method reverse within the method numberToWords in order to print the words in the correct order.
 //
@@ -44,7 +113,13 @@ public class NumberToWords {
             return -1;
         }
         int counter = 0;
-        for(int i = number; number > 0; i--)
+        while(number > 0) {
+            if(number % 10 >= 0) {
+                number = number /10;
+                counter++;
+            }
+        }
+        return counter;
     }
 
 
