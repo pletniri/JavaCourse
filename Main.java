@@ -1,43 +1,43 @@
-import java.util.Scanner;
-
 public class Main {
-    public static void main(String[] args) {
-
-    Scanner scanner = new Scanner(System.in);
-
-    int counter = 1;
-//    double sum = 0;
-    double min = 0;
-    double max = 0;
-
-
-    while(counter > 0){
-        System.out.println("Enter number #" + counter + ":");
-        String nextNumber = scanner.nextLine();
-        try{
-//            int number = Integer.parseInt(nextNumber);
-            double number = Double.parseDouble(nextNumber);
-            if(number > max){
-                max = number;
-            } else if((number < min && counter > 1) ||
-                    (counter == 1)) {
-                min = number;
-            }
-
-            counter++;
-
-        } catch (NumberFormatException nfe) {
-//            System.out.println("Invalid Number");
-            break;
-        }
+    public static void main(String[] args)
+    {
 
     }
-        if(counter > 1) {
-            System.out.println("The minimum number entered is: " + min);
-            System.out.println("The maximum number entered is: " + max);
-        } else {
-            System.out.println("No valid data entered");
+
+
+    public static int getBucketCount(double width, double height, double areaPerBucket, int extraBuckets){
+        if(width <= 0  || height <=0 || areaPerBucket <= 0 || extraBuckets < 0) {
+            return -1;
         }
 
+        int bucketNeeded = (int) Math.ceil((width * height) / areaPerBucket);
+        int bucketToBuy = bucketNeeded - extraBuckets;
+        return bucketToBuy;
+
     }
+
+    public static int getBucketCount(double width, double height, double areaPerBucket){
+        if(width <= 0  || height <=0 || areaPerBucket <= 0) {
+            return -1;
+        }
+
+        int bucketToBuy = (int) Math.ceil((width * height) / areaPerBucket);
+        return bucketToBuy;
+
+    }
+
+    public static int getBucketCount(double area, double areaPerBucket){
+        if(area <= 0 || areaPerBucket <= 0) {
+            return -1;
+        }
+
+        int bucketToBuy = (int) Math.ceil(area / areaPerBucket);
+        return bucketToBuy;
+
+    }
+
+//    NOTE: Use the method Math.ceil to round the number of calculated buckets (double) then convert it
+//    into an int before returning the value from the methods.
+
+
 }
