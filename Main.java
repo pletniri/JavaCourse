@@ -1,214 +1,128 @@
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Random;
-import java.util.Stack;
+import java.util.*;
 
 public class Main {
+    private static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
 
-        int [] array = {23, 56, 6, 9, 123, 56};
-       // System.out.println(Arrays.toString(reverseArray(array)));
-        reverse(array);
-//        int [] unsortedArray = getRandom(20);
-//        System.out.println(Arrays.toString(unsortedArray));
-//
-//        int [] reversed = arrayChallenge(unsortedArray);
-//        System.out.println(Arrays.toString(reversed));
+        ArrayList <String> items = new ArrayList<>(20);
+//        addItems(items, "study");
+//        addItems(items, "dinner");
+//        addItems(items, "lunch");
+//        addItems(items, "study");
+//        addItems(items, "shopping");
+//        removeItems(items, 4);
+//        removeItems(items);
+//        addItems(items, "study");
+//        addItems(items, "dinner");
+//        addItems(items, "lunch");
+//        addItems(items, "study");
+//        addItems(items, "shopping");
+//        removeItems(items, "shopping");
+//        checkItems(items, "lunch");
+//        addItems(items, "study");
+//        addItems(items, "dinner");
+//        addItems(items, "lunch");
+//        addItems(items, "study");
+//        addItems(items, "shopping");
+//        sortItems(items);
+//        removeDoubles(items);
+//        removeDoubles(items);
 
-//        System.out.println(arrayChallenge());
-
-
-//        String s = new String();
-//        s = "((){}[])";
-//        System.out.println(isValid(s));
-//        int[] digits = new int [] {1,5,4,7,6,5,3,1};
-//        String s = "ajkhg;auaewproitkjdfh";
-//        System.out.println(longestPalindrome(s));
-
-//       nextPermutation(digits);
-//        System.out.println(Arrays.toString(digits));
-
-    }
-
-    private static int [] reverseCopy(int [] array) {
-        int [] reversedCopy = new int [array.length];
-        int maxIndex = array.length -1;
-        for ( int el : array) {
-            reversedCopy[maxIndex--] = el;
-        }
-        return reversedCopy;
-    }
-
-    public static int reverseArray( int [] array) {
-        int min = Integer.MAX_VALUE;
-        for (int el : array){
-            if(el < min){
-                min = el;
+        boolean flag = true;
+        while (flag) {
+            printActions();
+            switch (Integer.parseInt(scanner.nextLine())){
+                case 1 -> addManyItems(items);
+                case 3 -> removeManyItems(items);
+                default -> flag = false;
             }
-
+            items.sort(Comparator.naturalOrder());
+            System.out.println(items);
         }
-        return min;
     }
 
-    private static void reverse (int [] array) {
-        int maxIndex = array.length -1;
-        int halfLength = array.length /2;
+    public static void addManyItems(ArrayList<String> items) {
+        System.out.println("Add items [separate items by comma]:");
+        String [] manyItems = scanner.nextLine().split(",");
+        items.addAll(List.of(manyItems));
 
-        for (int i =0; i < halfLength; i++ ) {
-            int temp = array [i];
-            array[i] = array[maxIndex - i];
-            array[maxIndex - i] = temp;
-
+        for (String i : manyItems) {
+            String trimmed = i.trim();
+            if(items.indexOf(trimmed) < 0) {
+                items.add(trimmed);
+            }
         }
-        System.out.println(Arrays.toString(array));
     }
 
-    public static int [] getRandom(int len) {
-        Random random = new Random();
-
-        int[] s = new int[len];
-        for (int i = 0; i < len; i++) {
-            s[i] = random.nextInt(1000);
+    public static void removeManyItems(ArrayList<String> items) {
+        System.out.println("Remove items [separate items by comma]:");
+        String [] manyItems = scanner.nextLine().split(",");
+          for (String i : manyItems) {
+            String trimmed = i.trim();
+            items.remove(trimmed);
         }
-        return s;
     }
 
-    public static int [] arrayChallenge(int [] s){
-        Arrays.sort(s);
-        System.out.println(Arrays.toString(s));
-        int [] tempArray = s;
-        int i = tempArray[0];
-        int length = tempArray.length -1;
-        int j = tempArray[length];
-        while ( i < j) {
-            int temp =  i;
-            i = j;
-            j = i;
-            i++;
-            j--;
+    private static void printActions() {
+        String textBlock = """
+                Available actions:
+                0 - to shutdown
+                1 - to add item(s) to list (comma delimited list)
+                2 - to remove any items (comma delimited list
+                Enter a number for which action you want to do:""";
+        System.out.println(textBlock + " ");
+    }
+
+    public static void addItems (ArrayList <String> items, String newItem) {
+        items.add(newItem);
+        System.out.println(items);
+    }
+
+    public static void removeItems (ArrayList <String> items, int index) {
+        items.remove(index);
+        System.out.println(items);
+    }
+
+    public static void removeItems (ArrayList <String> items, String item) {
+        items.remove(item);
+        System.out.println(items);
+    }
+
+    public static void removeItems (ArrayList <String> items) {
+        items.clear();
+        System.out.println(items);
+    }
+
+    public static void checkItems (ArrayList <String> items, String itemToCheck) {
+        if (items.indexOf(itemToCheck) != -1) {
+            System.out.println("The list already has " + itemToCheck);
+        } else {
+            System.out.println("The list does not have " + itemToCheck);
         }
-        return tempArray;
+    }
+
+    public static void sortItems (ArrayList <String> items) {
+        Collections.sort(items);
+        System.out.println(items);
 
     }
 
+    public static void removeDoubles (ArrayList <String> items) {
 
+        HashSet<String> set = new HashSet<>(items);
 
-    //created a map with all possible characters
-    static final Map<Character, Character> map = Map.of('(', ')',
-                '[', ']',
-                '{', '}');
-        public static boolean isValid (String s){
-            //created a stack from which it is handy to take the last put there character
-            Stack<Character> stack = new Stack<>();
-            //loop where character c is going to be one or another character
-            for (char c : s.toCharArray()) {
-                // if we have this character as a key in the map we put in the stack
-                if (map.containsKey(c)) {
-                    stack.push(c);
-                } else {
-                    if (stack.isEmpty()) {
-                        return false;
-                    }
-                    //if we do not have this character as a key and the stack is not empty we put the last character in the
-                    //stack in a variable val
-                    char val = stack.pop();
-                    //if key and value are not equal return false, otherwise go to the next character
-                    if (map.get(val) != c) {
-                        return false;
-                    }
+        if(items.size() >  set.size()) {
+            Collections.sort(items);
+            for (int i = 0; i < items.size() - 1; i++){
+                if (items.get(i) == items.get(i + 1)) {
+                    items.remove(i);
                 }
             }
-            return stack.isEmpty();
+            System.out.println(items);
         }
 
-
-
-
-//    public static String longestPalindrome(String s) {
-//        if (s == null || s.length() < 1) return " ";
-//
-//        if (s.length() == 1) {
-//            return s;
-//        }
-//
-//        String longest = s.substring(0, 1);
-//
-//        for (int i =0; i < s.length(); i++) {
-//            String tmp = helper (s, i, i);
-//            if(tmp.length() > longest.length()) {
-//                longest = tmp;
-//            }
-//            tmp = helper(s,i, i +1);
-//            if(tmp.length() > longest.length()) {
-//                longest = tmp;
-//            }
-//        }
-//        return longest;
-//    }
-//    public static String helper(String s, int begin, int end) {
-//        while (begin >= 0 && end <= s.length() -1 && s.charAt(begin) == s.charAt(end)) {
-//            begin--;
-//            end++;
-//        }
-//
-//        return s.substring(begin +1, end);
-//    }
-
-
-//    public static int minSubArrayLen(int s, int[] nums) {
-//        int n = nums.length;
-//        int ans = Integer.MAX_VALUE;
-//        int left = 0;
-//        int sum = 0;
-//        for (int i = 0; i < n; i++) {
-//            sum += nums[i];
-//            while (sum >= s) {
-//                ans = Math.min(ans, i + 1 - left);
-//                sum -= nums[left++];
-//            }
-//        }
-//        return (ans != Integer.MAX_VALUE) ? ans : 0;
-//    }
-//
-
-//    public static void nextPermutation(int[] nums) {
-//        int i = nums.length - 2;
-//        //this loop cheks if the digits in an acsending order. The last one should be smaller the the previous one.
-//        // if not, the code goes to the second loop
-//        //3 4 5 2 while 5 is more than the digit after, i  goes to the left
-//        // when i finds the number less then i + 1, loop stops and the second loop starts
-//        while (i >= 0 && nums[i + 1] <= nums[i]) {
-//            i--;
-//        }
-//        if (i >= 0) {
-//            /// j starts at the last position of the array
-//            //while j is less than i loop is going
-//            int j = nums.length - 1;
-//            while (j >= 0 && nums[j] <= nums[i]) {
-//                j--;
-//            }
-//            swap(nums, i, j);
-//        }
-//        reverse(nums, i + 1);
-//    }
-//
-//    private static void reverse(int[] nums, int start) {
-//        int i = start, j = nums.length - 1;
-//        while (i < j) {
-//            swap(nums, i, j);
-//            i++;
-//            j--;
-//        }
-//    }
-//
-//    private static void swap(int[] nums, int i, int j) {
-//        int temp = nums[i];
-//        nums[i] = nums[j];
-//        nums[j] = temp;
-//    }
-
-
-
+    }
 
 
 }
